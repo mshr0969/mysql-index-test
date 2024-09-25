@@ -1,64 +1,53 @@
 # MySQLのインデックスのパフォーマンスをテストしてみる
 
-## 数値を単一で検索
+詳しくはzennの記事を参照してください！(まだ執筆中)
 
-```sql
--- プロファイリングの有効化
-SET
-profiling = 1;
--- インデックスなしのクエリ実行と時間測定
-SELECT *
-FROM employees
-WHERE salary = 75000;
+## セットアップ
 
-SHOW
-PROFILES;
+データベース立ち上げ
 
--- インデックスの作成
-CREATE INDEX idx_name ON employees (salary);
-
--- インデックスありのクエリ実行と時間測定
-SELECT *
-FROM employees
-WHERE salary = 75000;
-
-SHOW
-PROFILES;
+```shell
+make up
 ```
 
-## 数値を範囲指定で検索
+データベースに接続
 
-```sql
--- プロファイリングの有効化
-SET
-profiling = 1;
--- インデックスなしのクエリ実行と時間測定(比較演算子を使う)
-SELECT *
-FROM employees
-WHERE salary >= 70000
-  AND salary <= 90000;
+```shell
+docker exec -it mysql-index-test-db-1 mysql -u root -ppassw0rd
+```
 
--- BETWEENを使ったクエリ実行と時間測定
-SELECT *
-FROM employees
-WHERE salary BETWEEN 70000
-          AND 90000;
+testデータベースに切り替え
 
--- インデックスの作成
-CREATE INDEX idx_name ON employees (salary);
+```shell
+mysql> use test;
+```
 
--- インデックスありのクエリ実行と時間測定
-SELECT *
-FROM employees
-WHERE salary >= 70000
-  AND salary <= 90000;
+## インデックスの効果を確認してみる
 
--- BETWEENを使ったクエリ実行と時間測定
-SELECT *
-FROM employees
-WHERE salary BETWEEN 70000
-          AND 90000;
+```shell
+mysql> SET profiling = 1;
+```
 
-SHOW
-PROFILES;
+給料が75000の人を検索
+
+```shell
+mysql> SELECT * FROM employees WHERE salary = 75000;
+```
+
+実行時間を確認
+
+```shell
+mysql> SHOW PROFILES;
+```
+
+給与カラムにインデックスを追加する
+
+```shell
+mysql> CREATE INDEX idx_salary ON employees (salary);
+```
+
+EXPLAINを使ってクエリの実行計画を確認
+
+```shell
+mysql> EXPLAIN SELECT * FROM employees WHERE salary = 75000;
 ```
