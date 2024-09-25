@@ -4,4 +4,4 @@ up:
 
 .PHONY: down
 down:
-	docker compose down
+	docker compose down -v
