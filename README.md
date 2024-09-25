@@ -24,6 +24,8 @@ mysql> use test;
 
 ## インデックスの効果を確認してみる
 
+profillingを有効に
+
 ```shell
 mysql> SET profiling = 1;
 ```
