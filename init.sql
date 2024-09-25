@@ -21,7 +21,7 @@ BEGIN
     -- isDeletedはFALSE固定
 
     -- 残りのレコードをランダムなUUIDで挿入
-    WHILE i <= 9999
+    WHILE i <= 99999
         DO
             -- ランダムに名前を選ぶ (プレフィックスとサフィックスを組み合わせる)
             INSERT INTO employees (id, name, salary, isDeleted)
@@ -35,7 +35,7 @@ BEGIN
                                 'Smith', 'Doe', 'Johnson', 'Brown', 'Wilson', 'Moore', 'Taylor', 'Anderson'
                             )
                     ),
-                    FLOOR(50000 + (RAND() * 50000)), -- ランダムな給与 (50000 ~ 100000)
+                    FLOOR(50000 + (RAND() * 950000)), -- ランダムな給与 (50000 ~ 1000000)
                     ELT(FLOOR(1 + (RAND() * 2)), TRUE, FALSE) -- ランダムでTRUEまたはFALSEを選ぶ
                    );
             SET i = i + 1;
