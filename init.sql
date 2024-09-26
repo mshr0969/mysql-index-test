@@ -15,7 +15,7 @@ BEGIN
     -- 知っているUUIDを指定してレコードを挿入
     INSERT INTO employees (id, name, salary, isDeleted)
     VALUES ('123e4567-e89b-12d3-a456-426614174000', -- 既知のUUID
-            'John Doe', -- 固定の名前
+            'Test Test', -- 固定の名前
             75000, -- 固定の給与
             FALSE);
     -- isDeletedはFALSE固定
